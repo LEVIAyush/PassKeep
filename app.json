@@ -1,30 +1,29 @@
 {
   "expo": {
-    "name": "PasswordManagerApp",
-    "slug": "PasswordManagerApp",
-    "version": "1.0.0",
+    "name": "PassKeep",
+    "slug": "passkeep",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#090D0B",
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#090D0B"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "name": "PassKeep",
+      "shortName": "PassKeep",
+      "description": "A private password vault. Encrypted on your device.",
+      "backgroundColor": "#090D0B",
+      "themeColor": "#090D0B"
     }
   }
 }
