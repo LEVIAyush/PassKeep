@@ -6,10 +6,10 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { VaultProvider, useVault } from './src/state/VaultContext';
 import { ToastProvider } from './src/components/Toast';
 import { Icon, Wordmark } from './src/components/ui';
+
 import SetupScreen from './src/screens/SetupScreen';
 import UnlockScreen from './src/screens/UnlockScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -17,6 +17,7 @@ import VaultScreen from './src/screens/VaultScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import EntryFormScreen from './src/screens/EntryFormScreen';
 import { colors } from './src/theme';
+import { BackupReminderProvider } from './src/components/BackupReminder';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -55,24 +56,26 @@ function Tabs() {
 
 function Unlocked() {
   return (
-    <NavigationContainer theme={navTheme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: colors.panel },
-          headerTintColor: colors.text,
-          headerTitleStyle: { fontWeight: '700' },
-          headerShadowVisible: false,
-          contentStyle: { backgroundColor: colors.bg },
-        }}
-      >
-        <Stack.Screen name="Main" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen
-          name="EntryForm"
-          component={EntryFormScreen}
-          options={({ route }) => ({ title: route.params?.entryId ? 'Edit password' : 'Add password' })}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <BackupReminderProvider>
+      <NavigationContainer theme={navTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: colors.panel },
+            headerTintColor: colors.text,
+            headerTitleStyle: { fontWeight: '700' },
+            headerShadowVisible: false,
+            contentStyle: { backgroundColor: colors.bg },
+          }}
+        >
+          <Stack.Screen name="Main" component={Tabs} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="EntryForm"
+            component={EntryFormScreen}
+            options={({ route }) => ({ title: route.params?.entryId ? 'Edit password' : 'Add password' })}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </BackupReminderProvider>
   );
 }
 

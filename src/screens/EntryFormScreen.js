@@ -7,6 +7,8 @@ import { generatePassword } from '../crypto';
 import { DEFAULT_OPTIONS, MIN_LENGTH, MAX_LENGTH } from '../core/generator.js';
 import { estimateStrength } from '../core/strength.js';
 import { colors, space, type, MAX_WIDTH } from '../theme';
+import { useBackupReminder } from '../components/BackupReminder';
+
 
 const SETS = [
   ['lower', 'Lowercase letters (a-z)'],
@@ -19,6 +21,7 @@ export default function EntryFormScreen({ navigation, route }) {
   const { entryId, category: startCategory } = route.params || {};
   const { entries, addEntry, updateEntry } = useVault();
   const toast = useToast();
+  const remindBackup = useBackupReminder();
   const existing = entryId ? entries.find((e) => e.id === entryId) : null;
 
   const [category, setCategory] = useState(existing?.category || startCategory || 'browser');
@@ -63,6 +66,7 @@ export default function EntryFormScreen({ navigation, route }) {
       if (existing) await updateEntry(existing.id, data); else await addEntry(data);
       toast(existing ? 'Changes saved' : 'Password saved');
       navigation.goBack();
+      if (!existing) remindBackup();
     } catch {
       toast("Couldn't save. Try again.", 'error');
       setBusy(false);
